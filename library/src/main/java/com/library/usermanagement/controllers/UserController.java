@@ -27,18 +27,20 @@ public class UserController {
         return user;
     }
 
+    @ResponseBody
     @PostMapping(path="/update",
             consumes=MediaType.APPLICATION_JSON_VALUE,
             produces=MediaType.APPLICATION_JSON_VALUE)
-    public void updateUser(UserDetails user) {
+    public void updateUser(@RequestBody UserDetails user) {
         userDetailRepository.save(user);
     }
 
-    @PostMapping(path="/deactivate",
-            consumes=MediaType.APPLICATION_JSON_VALUE,
-            produces=MediaType.APPLICATION_JSON_VALUE)
-    public void deactivateUser(UserDetails user) {
-        user.setActive(false);
-        userDetailRepository.save(user);
-    }
+    // @ResponseBody
+    // @PostMapping(path="/deactivate",
+    //         consumes=MediaType.APPLICATION_JSON_VALUE,
+    //         produces=MediaType.APPLICATION_JSON_VALUE)
+    // public void deactivateUser(@RequestBody UserDetails user) {
+    //     user.setActive(false);
+    //     userDetailRepository.save(user);
+    // }
 }

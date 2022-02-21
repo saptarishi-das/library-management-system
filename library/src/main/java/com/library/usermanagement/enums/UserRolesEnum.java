@@ -1,6 +1,7 @@
 package com.library.usermanagement.enums;
 
 public enum UserRolesEnum {
+    SUPER_ADMIN("Super Administrator"),
     ADMIN("Administrator"),
     STUDENT("Student"),
     STAFF("Staff"),

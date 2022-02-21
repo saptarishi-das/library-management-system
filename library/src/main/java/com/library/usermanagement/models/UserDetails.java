@@ -2,7 +2,7 @@ package com.library.usermanagement.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,25 +10,41 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.library.usermanagement.enums.UserRolesEnum;
+import com.library.organizationmanagement.models.OrganizationDetails;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "user_details")
+@EntityListeners(AuditingEntityListener.class)
 public class UserDetails implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-    private BigDecimal userId;
 
-    @Column(name = "user_name")
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @OneToOne
+    private UserAuthentication userAuthentication;
+
+    @OneToOne
+    private UserAuthorization userAuthorization;
+
+    @OneToOne
+    private OrganizationDetails organization;
+
+    @Column(name = "first_name")
     private String userName;
+
+    @Column(name = "last_name")
+    private String last_name;
 
     @Column(name = "primary_email", unique = true)
     private String primaryEmail;
@@ -45,13 +61,6 @@ public class UserDetails implements Serializable {
     @Column(name = "is_new_user")
     private boolean isNewUser = true;
 
-    // TODO - encoding
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "user_role")
-    private UserRolesEnum userRole;
-
     @Column(name = "created_on")
     @CreatedDate
     private Date createdOn;
@@ -67,13 +76,40 @@ public class UserDetails implements Serializable {
     @Column(name = "last_modified_by")
     @LastModifiedBy
     private String lastModifiedBy;
-
-    public BigDecimal getUserId() {
-        return userId;
+    
+    public UserDetails() {
+    }
+    
+    public OrganizationDetails getOrganization() {
+        return organization;
     }
 
-    public void setUserId(BigDecimal userId) {
-        this.userId = userId;
+    public void setOrganization(OrganizationDetails organization) {
+        this.organization = organization;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public UserAuthentication getUserAuthentication() {
+        return userAuthentication;
+    }
+
+    public void setUserAuthentication(UserAuthentication userAuthentication) {
+        this.userAuthentication = userAuthentication;
+    }
+
+    public UserAuthorization getUserAuthorization() {
+        return userAuthorization;
+    }
+
+    public void setUserAuthorization(UserAuthorization userAuthorization) {
+        this.userAuthorization = userAuthorization;
     }
 
     public String getUserName() {
@@ -82,6 +118,14 @@ public class UserDetails implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getPrimaryEmail() {
@@ -124,41 +168,37 @@ public class UserDetails implements Serializable {
         this.isNewUser = isNewUser;
     }
 
-    public String getPassword() {
-        return password;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserRolesEnum getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRolesEnum userRole) {
-        this.userRole = userRole;
-    }
-
-    public UserDetails() {
-    }
-
-    public UserDetails(BigDecimal userId, String userName, String primaryEmail, String secondaryEmail,
-            BigDecimal mobileNumber, boolean isActive, boolean isNewUser, String password, UserRolesEnum userRole,
-            Date createdOn, Date lastUpdatedOn, String createdBy, String lastModifiedBy) {
-        this.userId = userId;
-        this.userName = userName;
-        this.primaryEmail = primaryEmail;
-        this.secondaryEmail = secondaryEmail;
-        this.mobileNumber = mobileNumber;
-        this.isActive = isActive;
-        this.isNewUser = isNewUser;
-        this.password = password;
-        this.userRole = userRole;
+    public void setCreatedOn(Date createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public Date getLastUpdatedOn() {
+        return lastUpdatedOn;
+    }
+
+    public void setLastUpdatedOn(Date lastUpdatedOn) {
         this.lastUpdatedOn = lastUpdatedOn;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
     }
 
+    
 }
