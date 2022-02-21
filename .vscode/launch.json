@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch SampleCodes",
+            "request": "launch",
+            "mainClass": "com.library.SampleCodes",
+            "projectName": "library"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-LibraryApplication<library>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.library.LibraryApplication",
+            "projectName": "library",
+            "args": ""
+        }
+    ]
+}
